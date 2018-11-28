@@ -1,4 +1,5 @@
 class Dealer < Gamer
+  @validations = Gamer::validations
   def initialize
     super('Dealer')
   end

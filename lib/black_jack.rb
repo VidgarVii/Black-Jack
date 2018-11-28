@@ -5,5 +5,6 @@ class BlackJack
   end
 
   def start
+    dealer.presentation
   end
 end
