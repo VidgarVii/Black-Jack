@@ -6,10 +6,10 @@ class Gamer
   def initialize(name)
     @name = name
     validate!
-    @score = 100
+    @maney = 100
   end
 
   def place_bet(count)
-    @score -= count
+    @maney -= count
   end
 end

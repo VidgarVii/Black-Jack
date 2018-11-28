@@ -4,7 +4,11 @@ class BlackJack
     @gamer = gamer
   end
 
-  def start
-    dealer.presentation
+  def bank
+    # для хранения ставок
+  end
+
+  def score
+    # Подсчет текущих очков
   end
 end

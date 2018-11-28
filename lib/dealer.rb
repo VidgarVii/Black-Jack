@@ -13,7 +13,5 @@ class Dealer < Gamer
     @cards = cards
   end
 
-  def presentation(gamer)
-    puts "Здравствуйте #{gamer.name}. Я ваш Дилер"
-  end
+  
 end
