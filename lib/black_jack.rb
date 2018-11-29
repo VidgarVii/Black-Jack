@@ -32,11 +32,4 @@ class BlackJack
   def score
     # Подсчет текущих очков
   end
-
-  private
-
-  def check_maney!
-    raise 'У игрока нет денег' if @player.maney < 10
-    raise 'У Дилера нет денег' if @dealer.maney < 10
-  end 
 end

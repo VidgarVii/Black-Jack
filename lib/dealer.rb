@@ -1,6 +1,6 @@
 class Dealer < Player
-  @validations = Player::validations
-  
+  @validations = Player.validations
+
   def initialize
     super('Dealer')
   end
@@ -13,6 +13,4 @@ class Dealer < Player
   def take_cards(cards)
     @cards = cards
   end
-
-  
 end
