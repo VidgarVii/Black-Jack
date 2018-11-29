@@ -27,16 +27,18 @@ class Interface
   def tracking
     system('clear')
     @dealer.first_give_cards
-    puts "В банке #{@game.bank} денег"
+    @game.score(:dealer)
+    @game.score(:player)
+
     print "\nРука Дилера: "
     hide_dealers_hand
+    puts "\nСтавка дилера - #{@game.players[:dealer][:bet]} баксов"
 
-    p @game.player_win?
+    puts "\n ...Actions... \n\n"
 
-    puts "\n\n\n Actions \n\n"
-
-    p @game.score(@game.players_hand)
-    print "\nРука игрока: "
+    puts "Ставка игрока - #{@game.players[:player][:bet]} баксов"
+    puts "Очки - #{@game.players[:player][:score]}"
+    print 'Рука игрока: '
     look_players_hand
   end
 
@@ -46,13 +48,13 @@ class Interface
   private
 
   def look_players_hand
-    @game.players_hand.each do |card|
+    @game.players[:player][:hand].each do |card|
       print "[#{card.value}#{card.suit}] "
     end
   end
 
   def hide_dealers_hand
-    @game.dealers_hand.size.times do
+    @game.players[:dealer][:hand].size.times do
       print '[*]'
     end
   end

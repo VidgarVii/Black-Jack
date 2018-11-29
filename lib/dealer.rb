@@ -8,17 +8,12 @@ class Dealer < Player
 
   def first_give_cards
     2.times do
-      give_card('dealers')
-      give_card('players')
+      give_card(:dealer)
+      give_card(:player)
     end
-  end
+  end 
 
-  def give_card(who)
-    card = @game.give_card_from_shoe
-    @game.send("#{who}_hand=", card)
-  end
-
-  def take_card(cards)
-    @cards = cards
+  def give_card(player)
+    @game.players[player][:hand] << @game.take_card
   end
 end
