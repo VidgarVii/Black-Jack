@@ -14,7 +14,7 @@ class Dealer < Player
   end
 
   def give_card(who)
-    card = @game.shoe.give_card
+    card = @game.give_card_from_shoe
     @game.send("#{who}_hand=", card)
   end
 

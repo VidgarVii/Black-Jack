@@ -1,6 +1,8 @@
 class BlackJack
   include Validation
+  
   attr_reader :players_hand, :dealers_hand
+  attr_reader :shoe
   # Надо переименовать валидотор
   validate :dealer, :nishebrod, 10
   validate :player, :nishebrod, 10
@@ -11,11 +13,13 @@ class BlackJack
     @players_hand = []
     @dealers_hand = []
     validate!
-    @cards = Cards.new
+    @shoe = Card.build.shuffle
   end
 
-  def shoe
-    @cards
+  def give_card_from_shoe
+    card = @shoe[0]
+    @shoe.delete(card)
+    card
   end
 
   def bank(maney)
@@ -31,19 +35,14 @@ class BlackJack
   end
 
   def score(hand)
+    check_array = []
     score = 0
-    # костыль
-    hand.each do |card|
-      val = card.delete(card[-1])
-      score += val.to_i unless val !~ /\d/
-      score += 10 unless val !~ /[WQK]/
+    hand.each { |card| check_array << card.value }
+    check_array.each do |value|
+      score += value.to_i unless value !~ /\d/
+      score += 10 unless value !~ /[JQK]/
     end
-
-    hand.each do |card|
-      val = card.delete(card[-1])
-      score += 1 unless val !~ /A/ && score < 10
-      #score += 11 unless val !~ /A/ && score >= 10
-    end
-    p score
+    score += score > 10 ? 1 : 11 if check_array.include?('A')
+    score
   end
 end

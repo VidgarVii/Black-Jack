@@ -32,9 +32,9 @@ class Interface
     puts "\n\n\n Actions \n\n"
 
 
-    @game.score(@game.players_hand)
+    p @game.score(@game.players_hand)
     print "\nРука игрока: "
-    print @game.players_hand
+    look_players_hand
   end
 
   # Нужен метод который будем спрашивать что делать дальше
@@ -42,9 +42,15 @@ class Interface
 
   private
 
+  def look_players_hand
+    @game.players_hand.each do |card|
+      print "[#{card.value}#{card.suit}] "
+    end
+  end
+
   def hide_dealers_hand
     @game.dealers_hand.size.times do
-      print '*'
+      print '[*]'
     end
   end
 end
