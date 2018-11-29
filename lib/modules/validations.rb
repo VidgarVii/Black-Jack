@@ -44,5 +44,9 @@ module Validation
     def validate_presence(instance, param)
       raise 'Значение не должно быть пустым' if instance.to_s.empty? || instance.nil?
     end
+
+    def validate_nishebrod(instance, param)
+      raise "У #{instance.name} нет денег" if instance.maney < param
+    end
   end
 end

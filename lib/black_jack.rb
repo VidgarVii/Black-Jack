@@ -1,8 +1,13 @@
 class BlackJack
+  include Validation
+  # Надо переименовать валидотор
+  validate :dealer, :nishebrod, 10
+  validate :player, :nishebrod, 10
+
   def initialize(dealer, player)
     @dealer = dealer
     @player = player
-    check_maney!
+    validate!
     @cards = Cards.new
   end
 
@@ -15,7 +20,7 @@ class BlackJack
   end
 
   def players_hand(card)
-    @players_hand ||=[]
+    @players_hand ||= []
     @players_hand << card
   end
 
@@ -23,7 +28,6 @@ class BlackJack
     @dealers_hand ||= []
     @dealers_hand << card
   end
-  
 
   def score
     # Подсчет текущих очков

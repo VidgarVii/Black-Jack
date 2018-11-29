@@ -1,4 +1,4 @@
-class StartGame
+class Interface
   attr_accessor :player
 
   def initialize
