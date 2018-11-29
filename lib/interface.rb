@@ -25,12 +25,13 @@ class Interface
   end
 
   def tracking
+    system('clear')
     @dealer.first_give_cards
+    puts "В банке #{@game.bank} денег"
     print "\nРука Дилера: "
     hide_dealers_hand
 
     puts "\n\n\n Actions \n\n"
-
 
     p @game.score(@game.players_hand)
     print "\nРука игрока: "

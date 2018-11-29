@@ -1,8 +1,8 @@
 class BlackJack
   include Validation
-  
-  attr_reader :players_hand, :dealers_hand
-  attr_reader :shoe
+
+  attr_reader :players_hand, :dealers_hand, :shoe, :bank
+
   # Надо переименовать валидотор
   validate :dealer, :nishebrod, 10
   validate :player, :nishebrod, 10
@@ -10,9 +10,12 @@ class BlackJack
   def initialize(dealer, player)
     @dealer = dealer
     @player = player
+    validate!
+    @bank = 0
+    make_a_bet(dealer.place_bet(10))
+    make_a_bet(player.place_bet(10))
     @players_hand = []
     @dealers_hand = []
-    validate!
     @shoe = Card.build.shuffle
   end
 
@@ -22,7 +25,7 @@ class BlackJack
     card
   end
 
-  def bank(maney)
+  def make_a_bet(maney)
     @bank += maney
   end
 

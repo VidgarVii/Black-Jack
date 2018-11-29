@@ -12,5 +12,6 @@ class Player
 
   def place_bet(count)
     @maney -= count
+    count
   end
 end
