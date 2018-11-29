@@ -48,4 +48,24 @@ class BlackJack
     score += score > 10 ? 1 : 11 if check_array.include?('A')
     score
   end
+
+  def player_win?
+    # Нужна переменнаю куда записывать очки и их сравнивать
+    # @status
+    # @winner  может быть :dealer, :player, :draw
+    # и тогда ты делаешь не return
+    # а @winner = …. if ….
+
+    return true if score(@dealers_hand) > 21
+    return false if score(@players_hand) > 21
+    #return true if score(@dealers_hand) < score(@players_hand)
+    #return false if score(@dealers_hand) > score(@players_hand)
+    #return 'draw' if score(@dealers_hand) == score(@players_hand)
+
+    return case score(@players_hand) <=> score(@dealers_hand)
+           when 1 then true
+           when -1 then false
+           when 0 then 'draw'
+           end
+  end
 end

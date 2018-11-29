@@ -31,6 +31,8 @@ class Interface
     print "\nРука Дилера: "
     hide_dealers_hand
 
+    p @game.player_win?
+
     puts "\n\n\n Actions \n\n"
 
     p @game.score(@game.players_hand)
