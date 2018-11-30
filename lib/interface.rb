@@ -57,8 +57,8 @@ class Interface
 
   def choice_player
     choice = gets.chomp
-    return @dealer.give_card(:player) if choice == '2'
-    return open_cards if choice == '3'
+    return @dealer.give_card(:player) if choice == '1'
+    return open_cards if choice == '2'
 
     skip_move!
   rescue StandardError => e
@@ -68,8 +68,8 @@ class Interface
 
   def puts_questions
     puts "\n\nEnter - Пропустить ход"
-    puts '2 - Добавить карту'
-    puts '3 - Открыть карты' if @shuffle > 1
+    puts '1 - Добавить карту'
+    puts '2 - Открыть карты' if @shuffle > 1
   end
 
   private
@@ -118,5 +118,6 @@ class Interface
     |  _ \| |/ _` |/ __| |/ /  _  | |/ _` |/ __| |/ /
     | |_) | | (_| | (__|   <  | |_| | (_| | (__|   <
     |____/|_|\__,_|\___|_|\_\  \___/ \__,_|\___|_|\_\ '
+    puts '                                     play 8-bit music'
   end
 end
