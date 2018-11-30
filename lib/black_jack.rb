@@ -25,20 +25,17 @@ class BlackJack
   end
 
   def take_card
-    card = @shoe[0]    
+    card = @shoe[0]
     @shoe.delete(card)
     card
   end
 
   def score(player)
     score = @players[player][:score]
-    check_array = []
-    @players[player][:hand].each { |card| check_array << card.value }
-    check_array.each do |value|
-      score += value.to_i unless value !~ /\d/
-      score += 10 unless value !~ /[JQK]/
-    end
-    score += score > 10 ? 1 : 11 if check_array.include?('A')
+    value_last_card = @players[player][:hand][-1].value
+    score += value_last_card.to_i unless value_last_card !~ /\d/
+    score += 10 unless value_last_card !~ /[JQK]/
+    score += score > 10 ? 1 : 11 if value_last_card == 'A'
     @players[player][:score] = score
   end
 

@@ -27,8 +27,6 @@ class Interface
   def tracking
     system('clear')
     @dealer.first_give_cards
-    @game.score(:dealer)
-    @game.score(:player)
 
     print "\nРука Дилера: "
     hide_dealers_hand

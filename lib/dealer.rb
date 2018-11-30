@@ -11,9 +11,10 @@ class Dealer < Player
       give_card(:dealer)
       give_card(:player)
     end
-  end 
+  end
 
   def give_card(player)
     @game.players[player][:hand] << @game.take_card
+    @game.score(player)
   end
 end
