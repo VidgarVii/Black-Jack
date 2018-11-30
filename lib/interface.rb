@@ -38,7 +38,7 @@ class Interface
       puts "Money: #{@game.players[:player][:obj].money}"
       @dealer.give_card(:dealer) if @game.players[:dealer][:score] < 17
       @shuffle += 1
-      puts @shuffle
+      puts "Shuffle #{@shuffle}"
       print "\nРука Дилера: "
       hide_dealers_hand
       puts "\nСтавка дилера - #{@game.players[:dealer][:bet]} баксов"
@@ -47,6 +47,7 @@ class Interface
       puts "Очки - #{@game.players[:player][:score]}"
       print "Рука игрока (#{@game.players[:player][:obj].name}): "
       look_hand(:player)
+      print "Деньги #{@player.money} $"
       puts "\n Ваш выбор?"
       choice_player
 

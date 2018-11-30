@@ -56,10 +56,8 @@ class BlackJack
     @winner
   end
 
-  # Зачем дилеру перекидывать деньги?
-  # И тут не работает winner underfine method[]
   def transfer_money
-    winner = @winner.tr(' WIN', '')
-    @player[winner][:obj].money += @players[:dealer][:bet] + @players[:player][:bet]
+    winner = @winner.tr(' WIN', '').downcase.to_sym 
+    @players[winner][:obj].money += @players[:dealer][:bet] + @players[:player][:bet]
   end
 end
