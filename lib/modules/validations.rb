@@ -46,7 +46,7 @@ module Validation
     end
 
     def validate_nishebrod(instance, param)
-      raise "У #{instance.name} нет денег" if instance.maney < param
+      raise "У #{instance.name} нет денег" if instance.money < param
     end
   end
 end

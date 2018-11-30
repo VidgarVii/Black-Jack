@@ -7,8 +7,8 @@ class Dealer < Player
   end
 
   def first_give_cards
+    give_card(:dealer)
     2.times do
-      give_card(:dealer)
       give_card(:player)
     end
   end
@@ -16,12 +16,5 @@ class Dealer < Player
   def give_card(player)
     @game.players[player][:hand] << @game.take_card
     @game.score(player)
-  end
-
-  def open_cards
-    system('clear')
-    puts "Карты Дилера #{@game.look_hand(:dialer)}"
-    puts "Карты Игрока #{@game.look_hand(:player)}"
-    puts "Выйграл #{@game.winner}"
   end
 end

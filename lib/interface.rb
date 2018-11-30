@@ -4,16 +4,21 @@ class Interface
   def initialize
     puts "♣ ♠ Game BlackJack ♦ ♣\nКак Вас зовут"
     create_player
-    puts "Добро пожаловть #{@player.name}.\n
+    welcome
+    puts "\nДобро пожаловть #{@player.name}.\n
     Для начало игры нажмите Enter.\n
     Для выхода - 0"
     start = gets.chomp
     return if start == '0'
 
     @dealer = Dealer.new
+    @stutus_game = true # определяет продолжить игру или выйти
+    start_game
+  end
+
+  def start_game
     @game = BlackJack.new(@dealer, @player)
     @dealer.game = @game
-    @stutus_game = true
     tracking
   end
 
@@ -21,49 +26,56 @@ class Interface
     player_name = gets.chomp
     @player = Player.new(player_name)
   rescue StandardError => e
-    puts e
+    print e
     retry
   end
 
   def tracking
     @dealer.first_give_cards
+    @shuffle = 0
     loop do
-      dealer_cards = @game.players[:dealer][:hand].size
-      player_cards = @game.players[:player][:hand].size
       system('clear')
+      puts "Money: #{@game.players[:player][:obj].money}"
+      @dealer.give_card(:dealer) if @game.players[:dealer][:score] < 17
+      @shuffle += 1
+      puts @shuffle
       print "\nРука Дилера: "
       hide_dealers_hand
       puts "\nСтавка дилера - #{@game.players[:dealer][:bet]} баксов"
       puts_questions
       puts "\n\nСтавка игрока - #{@game.players[:player][:bet]} баксов"
       puts "Очки - #{@game.players[:player][:score]}"
-      print 'Рука игрока: '
+      print "Рука игрока (#{@game.players[:player][:obj].name}): "
       look_hand(:player)
+      puts "\n Ваш выбор?"
       choice_player
 
       break if @stutus_game == false
     end
   end
 
-  # Продумать исключения полученных данных
   def choice_player
-    puts "\n Ваш выбор?"
     choice = gets.chomp
+    return @dealer.give_card(:player) if choice == '2'
+    return open_cards if choice == '3'
 
-    @dealer.give_card(:dealer) if @game.players[:dealer][:score] < 17
-    @dealer.give_card(:player) if choice == '2'
-    open_cards if choice == '3'
+    skip_move!
+  rescue StandardError => e
+    puts e
+    retry
   end
 
   def puts_questions
-    puts "\n\n1 - Пропустить ход"
+    puts "\n\nEnter - Пропустить ход"
     puts '2 - Добавить карту'
-    puts '3 - Открыть карты' if @game.players[:player][:hand].size > 2
+    puts '3 - Открыть карты' if @shuffle > 1
   end
 
-  # Нужен метод который будем спрашивать что делать дальше
-  # Нужен метод с loop для tracking  
   private
+
+  def skip_move!
+    raise 'Нельзя пропустить ход' if @game.players[:dealer][:score] >= 17 && @shuffle > 1
+  end
 
   def look_hand(player)
     @game.players[player][:hand].each do |card|
@@ -78,14 +90,32 @@ class Interface
   end
 
   def open_cards
-    return if @game.players[:player][:hand].size == 2
+    return if @shuffle < 2
 
-    @stutus_game = false
     system('clear')
     puts 'Карты Дилера'
     look_hand(:dealer)
     puts "\nКарты Игрока"
     look_hand(:player)
     puts "\n#{@game.winner}"
+    @game.transfer_money
+    repeat_game
+  end
+
+  def repeat_game
+    puts "Еще партию?\n (Y - да)"
+    choice = gets.chomp.downcase
+    start_game if choice == 'y'
+
+    @stutus_game = false
+  end
+
+  def welcome
+    system('clear')
+    puts '     ____  _            _          _            _
+    | __ )| | __ _  ___| | __     | | __ _  ___| | __
+    |  _ \| |/ _` |/ __| |/ /  _  | |/ _` |/ __| |/ /
+    | |_) | | (_| | (__|   <  | |_| | (_| | (__|   <
+    |____/|_|\__,_|\___|_|\_\  \___/ \__,_|\___|_|\_\ '
   end
 end
