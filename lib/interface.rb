@@ -96,8 +96,10 @@ class Interface
     system('clear')
     puts 'Карты Дилера'
     look_hand(:dealer)
+    puts "Очки: #{@game.players[:dealer][:score]}"
     puts "\nКарты Игрока"
     look_hand(:player)
+    puts "Очки: #{@game.players[:player][:score]}"
     puts "\n#{@game.winner}"
     @game.transfer_money
     repeat_game

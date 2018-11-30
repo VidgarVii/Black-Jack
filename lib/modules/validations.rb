@@ -32,16 +32,7 @@ module Validation
       end
     end
 
-    def validate_type(instance, klass)
-      puts instance
-      raise "#{instance} - не совпадает класс" unless instance.class == klass
-    end
-
-    def validate_format(instance, format)
-      raise "Формат #{instance} не корректен" if instance !~ format
-    end
-
-    def validate_presence(instance, param)
+    def validate_presence(instance, _param)
       raise 'Значение не должно быть пустым' if instance.to_s.empty? || instance.nil?
     end
 

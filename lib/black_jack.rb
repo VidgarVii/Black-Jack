@@ -23,7 +23,6 @@ class BlackJack
     make_a_bet(:dealer, 10)
     make_a_bet(:player, 10)
   end
-  
 
   def make_a_bet(player, money)
     @players[player][:bet] += @players[player][:obj].place_bet(money)
@@ -39,13 +38,14 @@ class BlackJack
     score = @players[player][:score]
     val_last_card = @players[player][:hand][-1].value
     score += val_last_card.to_i unless val_last_card !~ /\d/
-    score += 10 unless val_last_card !~ /[JQK]/    
+    score += 10 unless val_last_card !~ /[JQK]/
     score += score <= 10 ? 11 : 1 if val_last_card == 'A'
     score = polimorph_ace(player, score) if score > 21
     @players[player][:score] = score
     @players[player][:status] = 'LOST' if score > 21
     @players[player][:status] = 'WIN' if score == 21
   end
+
   # мутный костыль
   def polimorph_ace(player, score)
     check_ace ||= false
@@ -73,12 +73,12 @@ class BlackJack
 
   def transfer_money
     if @winner.nil?
-      @players[:player][:obj].money +=10
-      @players[:dealer][:obj].money +=10
+      @players[:player][:obj].money += 10
+      @players[:dealer][:obj].money += 10
       @players[:player][:bet] = 0
       @players[:dealer][:bet] = 0
     else
-      winner = @winner.tr(' WIN', '').downcase.to_sym 
+      winner = @winner.tr(' WIN', '').downcase.to_sym
       @players[winner][:obj].money += @players[:dealer][:bet] + @players[:player][:bet]
     end
   end

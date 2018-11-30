@@ -3,3 +3,15 @@ Style/Documentation:
 
 Style/AsciiComments:
   Enabled: false
+
+Metrics/MethodLength:
+  Max: 21
+
+Metrics/LineLength:
+  Max: 90
+
+Metrics/AbcSize:
+  Max: 50.0
+
+Metrics/ClassLength:
+  Max: 110
