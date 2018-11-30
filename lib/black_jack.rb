@@ -12,8 +12,8 @@ class BlackJack
     @player = player
     validate!
     @players = {
-      dealer: { obj: dealer, hand: [], bet: 0, score: 0 },
-      player: { obj: player, hand: [], bet: 0, score: 0 }
+      dealer: { obj: dealer, hand: [], bet: 0, score: 0, status: nil },
+      player: { obj: player, hand: [], bet: 0, score: 0, status: nil }
     }
     make_a_bet(:dealer, 10)
     make_a_bet(:player, 10)
@@ -37,13 +37,19 @@ class BlackJack
     score += 10 unless value_last_card !~ /[JQK]/
     score += score > 10 ? 1 : 11 if value_last_card == 'A'
     @players[player][:score] = score
+    @players[player][:status] = 'LOST' if score > 21
+    @players[player][:status] = 'WIN' if score == 21
   end
 
   def winner
     dealer = @players[:dealer][:score]
     player = @players[:player][:score]
-    @winner = player > dealer ? 'Player' : 'Dealer'
-    @winner = 'Draw' if player == dealer
-    @winner
+    lost = nil
+    winner = nil
+    lost = 'Player' if player > 21
+    lost = 'Dealer' if dealer > 21
+    winner = player > dealer ? 'Player WIN' : 'Dealer WIN' if lost.nil?
+    winner = 'Draw' if player == dealer
+    winner || lost
   end
 end

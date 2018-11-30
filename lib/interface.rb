@@ -13,6 +13,7 @@ class Interface
     @dealer = Dealer.new
     @game = BlackJack.new(@dealer, @player)
     @dealer.game = @game
+    @stutus_game = true
     tracking
   end
 
@@ -25,28 +26,47 @@ class Interface
   end
 
   def tracking
-    system('clear')
     @dealer.first_give_cards
+    loop do
+      dealer_cards = @game.players[:dealer][:hand].size
+      player_cards = @game.players[:player][:hand].size
+      system('clear')
+      print "\nРука Дилера: "
+      hide_dealers_hand
+      puts "\nСтавка дилера - #{@game.players[:dealer][:bet]} баксов"
+      puts_questions
+      puts "\n\nСтавка игрока - #{@game.players[:player][:bet]} баксов"
+      puts "Очки - #{@game.players[:player][:score]}"
+      print 'Рука игрока: '
+      look_hand(:player)
+      choice_player
 
-    print "\nРука Дилера: "
-    hide_dealers_hand
-    puts "\nСтавка дилера - #{@game.players[:dealer][:bet]} баксов"
+      break if @stutus_game == false
+    end
+  end
 
-    puts "\n ...Actions... \n\n"
+  # Продумать исключения полученных данных
+  def choice_player
+    puts "\n Ваш выбор?"
+    choice = gets.chomp
 
-    puts "Ставка игрока - #{@game.players[:player][:bet]} баксов"
-    puts "Очки - #{@game.players[:player][:score]}"
-    print 'Рука игрока: '
-    look_players_hand
+    @dealer.give_card(:dealer) if @game.players[:dealer][:score] < 17
+    @dealer.give_card(:player) if choice == '2'
+    open_cards if choice == '3'
+  end
+
+  def puts_questions
+    puts "\n\n1 - Пропустить ход"
+    puts '2 - Добавить карту'
+    puts '3 - Открыть карты' if @game.players[:player][:hand].size > 2
   end
 
   # Нужен метод который будем спрашивать что делать дальше
-  # Нужен метод с loop для tracking
-
+  # Нужен метод с loop для tracking  
   private
 
-  def look_players_hand
-    @game.players[:player][:hand].each do |card|
+  def look_hand(player)
+    @game.players[player][:hand].each do |card|
       print "[#{card.value}#{card.suit}] "
     end
   end
@@ -55,5 +75,17 @@ class Interface
     @game.players[:dealer][:hand].size.times do
       print '[*]'
     end
+  end
+
+  def open_cards
+    return if @game.players[:player][:hand].size == 2
+
+    @stutus_game = false
+    system('clear')
+    puts 'Карты Дилера'
+    look_hand(:dealer)
+    puts "\nКарты Игрока"
+    look_hand(:player)
+    puts "\n#{@game.winner}"
   end
 end

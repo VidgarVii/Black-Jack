@@ -17,4 +17,11 @@ class Dealer < Player
     @game.players[player][:hand] << @game.take_card
     @game.score(player)
   end
+
+  def open_cards
+    system('clear')
+    puts "Карты Дилера #{@game.look_hand(:dialer)}"
+    puts "Карты Игрока #{@game.look_hand(:player)}"
+    puts "Выйграл #{@game.winner}"
+  end
 end
