@@ -7,6 +7,7 @@ class Player
   def initialize(name)
     @name = name
     validate!
+    @hand = Hand.new
     @money = 100
   end
 
