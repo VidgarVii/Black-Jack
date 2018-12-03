@@ -1,17 +1,19 @@
 class Bank
- 
+
   def initialize
     @bank = 0
-    @bets = []
+    @players = []
   end
 
-  def place_bet(player, money)
-    @bets << ?
+  def place_bet(player) 
     check_money!(player)
+    @bank += player.take_money(10)
+    @players << player
   end
 
-  def return_money   
- 
+  def return_money
+    @players.each { |player| player.give_money(10) }
+    @bank = 0
   end
 
   def transfer_money_to_winner(winner)

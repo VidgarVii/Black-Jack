@@ -16,6 +16,6 @@ class Player
   end
 
   def give_money(money)
-    @money += money
+    @money += money    
   end  
 end
