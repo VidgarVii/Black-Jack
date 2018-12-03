@@ -3,8 +3,6 @@ class Interface
 
   def initialize(game)
     @game = game
-    welcome
-    gets
   end
 
   def shuffle(shuffle)
@@ -60,15 +58,5 @@ class Interface
     puts "Еще партию?\n (Y - да)"
     choice = gets.chomp.downcase
     choice == 'y'
-  end
-
-  def welcome
-    system('clear')
-    puts '     ____  _            _          _            _
-    | __ )| | __ _  ___| | __     | | __ _  ___| | __
-    |  _ \| |/ _` |/ __| |/ /  _  | |/ _` |/ __| |/ /
-    | |_) | | (_| | (__|   <  | |_| | (_| | (__|   <
-    |____/|_|\__,_|\___|_|\_\  \___/ \__,_|\___|_|\_\ '
-    puts '                                     play 8-bit music'
   end
 end
