@@ -41,7 +41,7 @@ class BlackJack
     score += val_last_card.to_i unless val_last_card !~ /\d/
     score += 10 unless val_last_card !~ /[JQK]/
     score += score <= 10 ? 11 : 1 if val_last_card == 'A'
-    score = polimorph_ace(player, score) if score > 21
+    score = polimorph_ace(player, score) if score > 21 && @players[player][:hand].size <= 3
     @players[player][:score] = score
     @players[player][:status] = 'LOST' if score > 21
     @players[player][:status] = 'WIN' if score == 21
