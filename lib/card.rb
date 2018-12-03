@@ -10,6 +10,8 @@ class Card
     validate!
   end
 
+  # Рубашка карты? (для дилера)
+
   private
 
   def validate!

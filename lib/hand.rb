@@ -3,6 +3,7 @@ class Hand
     
   end
 
+  #Подсчет? вывод очков
   def score
   end
 end
