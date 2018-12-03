@@ -37,6 +37,7 @@ class BlackJack
   def score(player)
     score = @players[player][:score]
     val_last_card = @players[player][:hand][-1].value
+    p val_last_card
     score += val_last_card.to_i unless val_last_card !~ /\d/
     score += 10 unless val_last_card !~ /[JQK]/
     score += score <= 10 ? 11 : 1 if val_last_card == 'A'
