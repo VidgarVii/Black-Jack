@@ -1,6 +1,6 @@
 class Player
   include Validation
-  attr_reader :name
+  attr_reader :name, :money
   validate :name, :presence
 
   def initialize(name)

@@ -36,7 +36,7 @@ module Validation
       raise 'Значение не должно быть пустым' if instance.to_s.empty? || instance.nil?
     end
 
-    def validate_nishebrod(instance, param)
+    def validate_min_money(instance, param)
       raise "У #{instance.name} нет денег" if instance.money < param
     end
   end
