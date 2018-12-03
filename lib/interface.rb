@@ -4,6 +4,7 @@ class Interface
   def initialize(game)
     @game = game
     welcome
+    gets
   end
 
   def shuffle(shuffle)
