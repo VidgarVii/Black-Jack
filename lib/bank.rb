@@ -6,7 +6,8 @@ class Bank
   end
 
   def place_bet(player, money)
-    
+    @bets << ?
+    check_money!(player)
   end
 
   def return_money   
@@ -19,7 +20,7 @@ class Bank
 
   private
 
-  def check_money!
-    raise 'Недостаточно средств' player.money < 10
+  def check_money!(player)
+    raise 'Недостаточно средств' if player.money < 10
   end
 end
