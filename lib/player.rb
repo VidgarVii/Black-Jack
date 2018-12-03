@@ -1,6 +1,5 @@
 class Player
   include Validation
-  attr_accessor :money
   attr_reader :name
   validate :name, :presence
 
@@ -11,8 +10,12 @@ class Player
     @money = 100
   end
 
-  def place_bet(count)
+  def take_money(count)
     @money -= count
     count
   end
+
+  def give_money(money)
+    @money += money
+  end  
 end
