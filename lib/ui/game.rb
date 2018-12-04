@@ -14,9 +14,8 @@ module Game
     start = gets.chomp
     return if start == '0'
 
-    @dealer = Dealer.new
-    @stutus_game = true # определяет продолжить игру или выйти
-    @dealer.start_game(@player)
+    game = BlackJack.new(@player)
+    game.start
   end
 
   private

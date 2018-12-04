@@ -13,5 +13,5 @@ class Deck
 
   def take_card
     @cards.pop
-  end  
+  end
 end

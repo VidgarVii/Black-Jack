@@ -6,7 +6,7 @@ class Hand
     @score = 0
   end
 
-  def puts_card(card)
+  def add_card(card)
     @cards << card
     calc_score(card)
   end

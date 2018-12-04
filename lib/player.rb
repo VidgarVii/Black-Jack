@@ -1,6 +1,6 @@
 class Player
   include Validation
-  attr_reader :name, :money
+  attr_reader :name, :money, :hand
   validate :name, :presence
 
   def initialize(name)
@@ -16,6 +16,6 @@ class Player
   end
 
   def give_money(money)
-    @money += money    
-  end  
+    @money += money
+  end
 end
