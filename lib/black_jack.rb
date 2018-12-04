@@ -9,7 +9,13 @@ class BlackJack
 
   def start
     return bets if bets.class == RuntimeError
+    loop do
+      round
+      break unless repeat_game?
+    end
+  end
 
+  def round
     @round = 1
     2.times { give_cards }
     loop do
@@ -23,9 +29,8 @@ class BlackJack
       break if @round == 'stop'
 
       @round += 1
-    end
-    repeat_game
-  end
+    end    
+  end  
 
   private
 
@@ -78,11 +83,13 @@ class BlackJack
     end
   end
 
-  def repeat_game
+  def repeat_game?
     if @interface.repeat_game?
       @dealer.hand.clear
       @player.hand.clear
-      start
+      true
+    else
+      false
     end
   end
 end
