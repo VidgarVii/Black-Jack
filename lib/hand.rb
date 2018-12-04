@@ -12,10 +12,11 @@ class Hand
     calc_score(card)
   end
 
-
-  #  def open,close; end (для дилера)
-  
-  # метод для вскрытия карт (показ всех карт для обоих играков)
+  def clear
+    @score = 0
+    @cards = []
+    @bust = false
+  end
 
   private
 

@@ -42,7 +42,7 @@ class Interface
     end
   end
 
-  def open_cards(resoult)
+  def open_cards(result)
     system('clear')
     puts 'Карты Дилера'
     look_hand(@dealer)
@@ -50,7 +50,7 @@ class Interface
     puts "\nКарты Игрока"
     look_hand(@player)
     puts "Очки: #{@player.hand.score}"
-    puts "\n#{winner(resoult)}"
+    puts "\n#{winner(result)}"
   end
 
   def repeat_game?
@@ -63,9 +63,9 @@ class Interface
     puts error
   end
 
-  def winner(resoult)
-    return 'PUSH' if resoult.class == String
+  def winner(result)
+    return 'PUSH' if result.class == String
 
-    "Выйграл #{resoult.name}"
+    "Выйграл #{result.name}"
   end
 end

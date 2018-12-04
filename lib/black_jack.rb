@@ -1,5 +1,4 @@
 class BlackJack
-  # Bust - перебор очков Hit - еще
 
   def initialize(player)
     @player = player
@@ -25,6 +24,7 @@ class BlackJack
 
       @round += 1
     end
+    repeat_game
   end
 
   private
@@ -49,9 +49,11 @@ class BlackJack
     return if @round < 2
 
     @round = 'stop'
+    result = result_game
+    @interface.open_cards(result)
+    return @bank.return_money if result == 'PUSH'
 
-    @interface.open_cards(resoult_game)
-    # bank.transfer_money
+    @bank.transfer_money_to_winner(result)
   end
 
   def bets
@@ -65,7 +67,7 @@ class BlackJack
     raise 'Нельзя пропустить ход' if @dealer.hand.score >= 17 && @round > 1
   end
 
-  def resoult_game
+  def result_game
     return 'PUSH' if @dealer.hand.score == @player.hand.score
     return 'PUSH' if @player.hand.bust && @dealer.hand.bust
     return @player if @dealer.hand.bust
@@ -73,6 +75,14 @@ class BlackJack
 
     unless @player.hand.bust && @dealer.hand.bust
       @dealer.hand.score > @player.hand.score ? @dealer : @player
+    end
+  end
+
+  def repeat_game
+    if @interface.repeat_game?
+      @dealer.hand.clear
+      @player.hand.clear
+      start
     end
   end
 end
