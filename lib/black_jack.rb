@@ -8,7 +8,12 @@ class BlackJack
   def start
     return bets if bets.class == RuntimeError
 
-    @dealer.
+    2.times do
+      @dealer.give_card(@player)
+      @dealer.give_card(@dealer)
+    end
+    p @dealer.hand
+    p @player.hand
   end
 
   private
