@@ -37,3 +37,4 @@ class Hand
     @score
   end
 end
+

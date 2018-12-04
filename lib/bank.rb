@@ -18,6 +18,7 @@ class Bank
 
   def transfer_money_to_winner(winner)
     winner.give_money(@bank)
+    @bank = 0
   end
 
   private
