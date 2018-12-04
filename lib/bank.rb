@@ -23,6 +23,6 @@ class Bank
   private
 
   def check_money!(player)
-    raise 'Недостаточно средств. Игра окончена' if player.money < 10
+    raise 'Недостаточно средств. Игра окончена' if player.bankroll < 10
   end
 end

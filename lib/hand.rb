@@ -1,15 +1,17 @@
 class Hand
-  attr_reader :score
+  attr_reader :score, :cards, :bust
 
   def initialize
     @cards = []
     @score = 0
+    @bust = false
   end
 
   def add_card(card)
     @cards << card
     calc_score(card)
   end
+
 
   #  def open,close; end (для дилера)
   
@@ -22,6 +24,7 @@ class Hand
     @score += 10 unless card.value !~ /[JQK]/
     @score += @score <= 10 ? 11 : 1 if card.value == 'A'
     @score = polimorph_ace if @score > 21 && @cards.size <= 3
+    @bust = true if @score > 21
   end
 
   def polimorph_ace
