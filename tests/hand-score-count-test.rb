@@ -2,6 +2,8 @@ require 'test/unit'
 require_relative '../lib/models/hand'
 require_relative '../lib/models/card'
 
+# Проверка подсчет очков карт, когда приходят или уже есть в руке тузы
+
 class Tests < Test::Unit::TestCase
   def setup
     @ace = Card.new('A', '♥')
