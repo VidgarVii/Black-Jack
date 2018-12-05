@@ -89,4 +89,33 @@ class Tests < Test::Unit::TestCase
     hand.add_card(@ace)
     assert_equal(hand.score, 13)
   end
+
+  def test_calc_score_10
+    hand = Hand.new
+    hand.add_card(@king)
+    hand.add_card(@ace)
+    hand.add_card(@ace)
+    hand.add_card(@ace)
+    assert_equal(hand.score, 13)
+  end
+
+  def test_calc_score_11
+    hand = Hand.new
+    hand.add_card(@king)
+    hand.add_card(@ace)
+    hand.add_card(@two)
+    hand.add_card(@ace)
+    hand.add_card(@ace)
+    assert_equal(hand.score, 15)
+  end
+
+  def test_calc_score_12
+    hand = Hand.new
+    hand.add_card(@five)
+    hand.add_card(@ace)
+    hand.add_card(@two)
+    hand.add_card(@ace)
+    hand.add_card(@ace)
+    assert_equal(hand.score, 20)
+  end
 end
