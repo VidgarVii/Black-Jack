@@ -12,10 +12,8 @@ class BlackJack
   end
 
   def start
-    bets
-    return @interface.game_over unless @bank.bank == 20
-
     loop do
+      bets
       round
       break unless repeat_game?
     end
@@ -77,6 +75,8 @@ class BlackJack
   end
 
   def repeat_game?
+    return false if @player.bankroll < 10
+
     if @interface.repeat_game?
       @dealer.hand.clear
       @player.hand.clear

@@ -7,15 +7,5 @@ class Card
   def initialize(value, suit)
     @value = value
     @suit = suit
-    validate!
-  end
-
-  # Рубашка карты? (для дилера)
-
-  private
-
-  def validate!
-    raise 'Некорректное значение масти' unless SUITS.include?(@suit)
-    raise 'Некорректное достоинство карты' unless VALUES.include?(@value)
   end
 end

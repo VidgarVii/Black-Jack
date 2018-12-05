@@ -14,6 +14,7 @@ class Bank
   def return_money
     @players.each { |player| player.give_money(10) }
     @bank = 0
+    @players = []
   end
 
   def transfer_money_to_winner(winner)
