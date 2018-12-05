@@ -34,10 +34,9 @@ class Interface
   end
 
   def choice_player
-    choice = gets.chomp
+    gets.chomp
   end
 
-  # убрать логику
   def puts_questions(round)
     puts "\n\nEnter - Пропустить ход"
     puts '1 - Добавить карту'

@@ -29,11 +29,7 @@ class Hand
   end
 
   def polimorph_ace
-    check_ace ||= false
-    return if check_ace == true
-
     @cards.each { |card| @score -= 10 if card.value == 'A' }
-    check_ace = true
     @score
   end
 end
