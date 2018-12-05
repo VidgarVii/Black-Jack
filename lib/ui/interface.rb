@@ -1,9 +1,8 @@
 class Interface
-  attr_accessor :player
+  attr_accessor :player, :bank
 
   def initialize(dealer)
     @dealer = dealer
-
     welcome
   end
 
@@ -26,7 +25,8 @@ class Interface
     print 'Рука дилера '
     hide_dealers_hand
     puts_questions(number)
-    puts "\nОчки - #{@player.hand.score}"
+    puts "\nБанк #{@bank.bank}"
+    puts "Очки - #{@player.hand.score}"
     print "Рука игрока (#{@player.name}): "
     look_hand(@player)
     print "Деньги #{@player.bankroll} $"

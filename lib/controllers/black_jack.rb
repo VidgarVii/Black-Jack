@@ -14,6 +14,7 @@ class BlackJack
     loop do
       @dealer.shuffle
       @bank = Bank.new
+      @interface.bank = @bank
       bets
       round
       break unless repeat_game?
