@@ -1,5 +1,4 @@
 class BlackJack
-
   def initialize
     @dealer = Dealer.new
     @bank = Bank.new
@@ -9,10 +8,7 @@ class BlackJack
 
   def create_player
     @player = Player.new(@interface.create_player)
-    @interface.player = @player
-  rescue StandardError => e
-    @interface.error(e)
-    retry
+    @interface.player = @player 
   end
 
   def start

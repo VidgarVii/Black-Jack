@@ -1,11 +1,8 @@
 class Player
-  include Validation
   attr_reader :name, :bankroll, :hand
-  validate :name, :presence
 
   def initialize(name)
     @name = name
-    validate!
     @hand = Hand.new
     @bankroll = 100
   end

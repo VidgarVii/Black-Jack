@@ -1,6 +1,4 @@
 class Dealer < Player
-  @validations = Player.validations
-
   def initialize
     super('Dealer')
     @shoe = Deck.new
