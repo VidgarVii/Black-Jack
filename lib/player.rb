@@ -2,6 +2,7 @@ class Player
   attr_reader :name, :bankroll, :hand
 
   def initialize(name)
+    name = 'Gamer' if name.empty?
     @name = name
     @hand = Hand.new
     @bankroll = 100
