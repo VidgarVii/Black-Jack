@@ -1,8 +1,7 @@
 class BlackJack
   def initialize
     @dealer = Dealer.new
-    @bank = Bank.new
-    @interface = Interface.new(@dealer, @bank)
+    @interface = Interface.new(@dealer)
     create_player
   end
 
@@ -13,6 +12,7 @@ class BlackJack
 
   def start
     loop do
+      @bank = Bank.new
       bets
       round
       break unless repeat_game?

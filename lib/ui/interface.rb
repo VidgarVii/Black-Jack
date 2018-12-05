@@ -1,9 +1,9 @@
 class Interface
   attr_accessor :player
 
-  def initialize(dealer, bank)
+  def initialize(dealer)
     @dealer = dealer
-    @bank = bank
+
     welcome
   end
 
