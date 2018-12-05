@@ -7,7 +7,6 @@ require_relative 'lib/dealer'
 require_relative 'lib/bank'
 require_relative 'lib/black_jack'
 require_relative 'lib/ui/interface'
-require_relative 'lib/ui/game'
 
-Game.start
-
+game = BlackJack.new
+game.start

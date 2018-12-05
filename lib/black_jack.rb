@@ -1,10 +1,18 @@
 class BlackJack
 
-  def initialize(player)
-    @player = player
+  def initialize
     @dealer = Dealer.new
     @bank = Bank.new
-    @interface = Interface.new(@player, @dealer, @bank)
+    @interface = Interface.new(@dealer, @bank)
+    create_player
+  end
+
+  def create_player
+    @player = Player.new(@interface.create_player)
+    @interface.player = @player
+  rescue StandardError => e
+    @interface.error(e)
+    retry
   end
 
   def start
@@ -20,17 +28,12 @@ class BlackJack
     2.times { give_cards }
     loop do
       @interface.round(@round)
-      begin
-        action_player
-      rescue StandardError => e
-        @interface.error(e)
-        retry
-      end
+      action_player
       break if @round == 'stop'
 
       @round += 1
-    end    
-  end  
+    end
+  end
 
   private
 

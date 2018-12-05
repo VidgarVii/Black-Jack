@@ -1,10 +1,24 @@
 class Interface
   attr_accessor :player
 
-  def initialize(player, dealer, bank)
-    @player = player
+  def initialize(dealer, bank)
     @dealer = dealer
     @bank = bank
+    welcome
+  end
+
+  def welcome
+    puts '     ____  _            _          _            _
+  | __ )| | __ _  ___| | __     | | __ _  ___| | __
+  |  _ \| |/ _` |/ __| |/ /  _  | |/ _` |/ __| |/ /
+  | |_) | | (_| | (__|   <  | |_| | (_| | (__|   <
+  |____/|_|\__,_|\___|_|\_\  \___/ \__,_|\___|_|\_\ '
+    puts '                                     play 8-bit music'
+    puts "♣ ♠ Game BlackJack ♦ ♥\n
+  Для начало игры нажмите Enter.\n
+  Для выхода - 0"
+    start = gets.chomp
+    return if start == '0'
   end
 
   def round(number)
@@ -67,5 +81,10 @@ class Interface
     return 'PUSH' if result.class == String
 
     "Выйграл #{result.name}"
+  end
+
+  def create_player
+    puts 'Введите свое имя'
+    gets.chomp
   end
 end
