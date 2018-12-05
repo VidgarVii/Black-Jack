@@ -1,4 +1,5 @@
 class Bank
+  attr_reader :bank
 
   def initialize
     @bank = 0
@@ -18,9 +19,5 @@ class Bank
   def transfer_money_to_winner(winner)
     winner.give_money(@bank)
     @bank = 0
-  end
-
-  def game_over
-    puts 'Игра окнчена.'
   end
 end

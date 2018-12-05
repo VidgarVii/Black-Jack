@@ -87,4 +87,8 @@ class Interface
     puts 'Введите свое имя'
     gets.chomp
   end
+
+  def game_over
+    puts 'Игра окнчена.'
+  end
 end

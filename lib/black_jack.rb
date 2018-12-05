@@ -16,6 +16,7 @@ class BlackJack
   end
 
   def start
+    bets
     return @interface.game_over unless @bank.bank == 20
 
     loop do
