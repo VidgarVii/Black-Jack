@@ -66,8 +66,8 @@ class Tests < Test::Unit::TestCase
     hand.add_card(@two)
     hand.add_card(@ace)
     hand.add_card(@ace)
-    hand.add_card(@king)    
-    hand.add_card(@five)   
+    hand.add_card(@king)   
+    hand.add_card(@five)
     assert_equal(hand.score, 19)
   end
 
