@@ -7,11 +7,12 @@ class BlackJack
 
   def create_player
     @player = Player.new(@interface.create_player)
-    @interface.player = @player 
+    @interface.player = @player
   end
 
   def start
     loop do
+      @dealer.shuffle
       @bank = Bank.new
       bets
       round
