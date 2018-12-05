@@ -16,7 +16,8 @@ class BlackJack
   end
 
   def start
-    return bets if bets.class == RuntimeError
+    return @interface.game_over unless @bank.bank == 20
+
     loop do
       round
       break unless repeat_game?
@@ -47,9 +48,7 @@ class BlackJack
     case choice
     when '1' then give_cards
     when '2' then open_cards
-    else
-      skip_move!
-      @dealer.give_card(@dealer)
+    else @dealer.give_card(@dealer)
     end
   end
 
@@ -65,14 +64,8 @@ class BlackJack
   end
 
   def bets
-    @bank.place_bet(@player)
-    @bank.place_bet(@dealer)
-  rescue StandardError => e
-    e
-  end
-
-  def skip_move!
-    raise 'Нельзя пропустить ход' if @dealer.hand.score >= 17 && @round > 1
+    @bank.place_bet(@player) if @player.bankroll >= 10
+    @bank.place_bet(@dealer) if @dealer.bankroll >= 10
   end
 
   def result_game

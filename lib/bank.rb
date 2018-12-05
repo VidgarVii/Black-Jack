@@ -5,8 +5,7 @@ class Bank
     @players = []
   end
 
-  def place_bet(player) 
-    check_money!(player)
+  def place_bet(player)
     @bank += player.take_money(10)
     @players << player
   end
@@ -21,9 +20,7 @@ class Bank
     @bank = 0
   end
 
-  private
-
-  def check_money!(player)
-    raise 'Недостаточно средств. Игра окончена' if player.bankroll < 10
+  def game_over
+    puts 'Игра окнчена.'
   end
 end
