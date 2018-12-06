@@ -21,23 +21,8 @@ class Hand
   private
 
   def calc_score(card)
-    @score += card.value.to_i unless card.value !~ /\d/
-    @score += 10 unless card.value !~ /[JQK]/
-    @score += @score <= 10 ? 11 : 1 if card.value == 'A'
-    @score = polimorph_ace if @score > 21 && @cards.find { |card| card.value == 'A' }
+    @score += card.score
+    @cards.select{ |card| card.value =~ /A/ }.each { @score -= 10 if @score > 21 }
     @bust = true if @score > 21
   end
-
-  def polimorph_ace
-    score = 0
-    @cards.each do |card| 
-      score += card.value.to_i unless card.value !~ /\d/
-      score += 10 unless card.value !~ /[JQK]/
-    end
-    @cards.each do |card|
-      score += @score <= 10 ? 11 : 1 if card.value == 'A'
-    end
-    @score = score
-  end
 end
-

@@ -12,7 +12,7 @@ class Bank
   end
 
   def return_money
-    @players.reject! { |player| player.give_money(10) }
+    @players.each { |player| player.give_money(10) }
   end
 
   def transfer_money_to_winner(winner)
