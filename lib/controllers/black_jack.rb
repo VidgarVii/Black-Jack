@@ -20,8 +20,6 @@ class BlackJack
       @interface.bank = @bank
       @interface.player_hand = @player_hand
       @interface.dealer_hand = @dealer_hand
-      @player_score = 0
-      @dealer_score = 0
       round
       break unless repeat_game?
     end
@@ -43,12 +41,14 @@ class BlackJack
   end
 
   def bets
-    @bank += @player.take_money(10)
-    @bank += 10
+    @bank = 20
+    @player.bankroll -= 10
     @dealer_bank -= 10
   end
 
   def score
+    @player_score = 0
+    @dealer_score = 0
     @player_hand.each { |card| @player_score += card.score}
     @dealer_hand.each { |card| @dealer_score += card.score}
     @player_hand.select { |card| card.value =~ /A/ }.each { @player_score -= 10 if @player_score > 21 }
@@ -67,13 +67,31 @@ class BlackJack
     return if @round < 2
 
     score
-    result = 'Dealer' if @player_score > 21 || @dealer_score > @player_score
-    result = @player.name if @dealer_score < @player_score || @dealer_score > 21
-    @interface.open_cards(result, @dealer_score, @player_score)
+    @result = result
+    @interface.open_cards(@result, @dealer_score, @player_score)
+    transfer_money
+  end
+
+  def result
+    return @player.name if @player_score == 21
+    return 'Dealer' if @player_score > 21
+    return 'PUSH' if @player_score == @dealer_score
+
+    @dealer_score < @player_score ? @player.name : 'Dealer'
+  end
+
+  def transfer_money
+    case @result
+    when 'Dealer' then @dealer_bank += @bank
+    when 'PUSH'
+      @player.bankroll += 10
+      @dealer_bank += 10
+    when @player.name then @player.bankroll += 20
+    end
   end
 
   def repeat_game?
-    return false if @player.bankroll < 10
+    return false if @player.bankroll < 10 || @dealer_bank < 10
 
     if @interface.repeat_game?
       true
