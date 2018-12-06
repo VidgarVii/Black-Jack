@@ -1,8 +1,11 @@
 class BlackJack
   def initialize
-    @dealer = Dealer.new
-    @interface = Interface.new(@dealer)
     create_player
+    @dealer_hand = []
+    @dealer_bank = 100
+    @player_bank = 100
+    @bank = 0
+    @interface = Interface.new(@dealer)
   end
 
   def create_player
@@ -12,8 +15,7 @@ class BlackJack
 
   def start
     loop do
-      @dealer.shuffle
-      @bank = Bank.new
+      @shoe = Deck.new
       @interface.bank = @bank
       bets
       round
