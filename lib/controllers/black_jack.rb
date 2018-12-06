@@ -76,6 +76,7 @@ class BlackJack
     return @player.name if @player_score == 21
     return 'Dealer' if @player_score > 21
     return 'PUSH' if @player_score == @dealer_score
+    return @player.name if @player_score < 21 &&  @dealer_score > 21
 
     @dealer_score < @player_score ? @player.name : 'Dealer'
   end
