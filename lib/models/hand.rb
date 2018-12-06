@@ -21,8 +21,7 @@ class Hand
   private
 
   def calc_score(card)
-    @score += card.score
-    @cards.select{ |card| card.value =~ /A/ }.each { @score -= 10 if @score > 21 }
+
     @bust = true if @score > 21
   end
 end

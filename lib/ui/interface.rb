@@ -1,8 +1,7 @@
 class Interface
-  attr_accessor :player, :bank
+  attr_accessor :player, :bank, :dealer_hand, :player_hand
 
-  def initialize(dealer)
-    @dealer = dealer
+  def initialize
     welcome
   end
 
@@ -22,14 +21,13 @@ class Interface
 
   def round(number)
     system('clear')
-    print 'Рука дилера '
+    print "Рука дилера"
     hide_dealers_hand
     puts_questions(number)
-    puts "\nБанк #{@bank.bank}"
-    puts "Очки - #{@player.hand.score}"
+    puts "\n Банк #{@bank}"
     print "Рука игрока (#{@player.name}): "
-    look_hand(@player)
-    print "Деньги #{@player.bankroll} $"
+    look_hand(@player_hand)
+    puts "Ваши деньги #{@player.bankroll}"
     puts "\n Ваш выбор?"
   end
 
@@ -38,31 +36,31 @@ class Interface
   end
 
   def puts_questions(round)
-    puts "\n\nEnter - Пропустить ход"
-    puts '1 - Добавить карту'
-    puts '2 - Открыть карты' if round > 1
+    print "\n1 - Добавить карту" if @player_hand.size < 3
+    print "\n2 - Открыть карты" if round > 1
+    puts "\nEnter - Пропустить ход\n" if round < 2
   end
 
-  def look_hand(player)
-    player.hand.cards.each do |card|
+  def look_hand(hand)
+    hand.each do |card|
       print "[#{card.value}#{card.suit}] "
     end
   end
 
   def hide_dealers_hand
-    @dealer.hand.cards.size.times do
+    @dealer_hand.size.times do
       print '[*]'
     end
   end
 
-  def open_cards(result)
+  def open_cards(result, dealer_score, player_score)
     system('clear')
     puts 'Карты Дилера'
-    look_hand(@dealer)
-    puts "Очки: #{@dealer.hand.score}"
+    look_hand(@dealer_hand)
+    puts "Очки: #{dealer_score}"
     puts "\nКарты Игрока"
-    look_hand(@player)
-    puts "Очки: #{@player.hand.score}"
+    look_hand(@player_hand)
+    puts "Очки: #{player_score}"
     puts "\n#{winner(result)}"
   end
 
@@ -77,9 +75,7 @@ class Interface
   end
 
   def winner(result)
-    return 'PUSH' if result.class == String
-
-    "Выйграл #{result.name}"
+    "Выйграл #{result}"
   end
 
   def create_player

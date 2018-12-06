@@ -1,11 +1,8 @@
 class BlackJack
   def initialize
-    create_player
-    @dealer_hand = []
     @dealer_bank = 100
-    @player_bank = 100
-    @bank = 0
-    @interface = Interface.new(@dealer)
+    @interface = Interface.new
+    create_player
   end
 
   def create_player
@@ -15,9 +12,16 @@ class BlackJack
 
   def start
     loop do
-      @shoe = Deck.new
-      @interface.bank = @bank
+      @dealer_hand = []
+      @player_hand = []
+      @deck = Deck.new
+      @bank = 0
       bets
+      @interface.bank = @bank
+      @interface.player_hand = @player_hand
+      @interface.dealer_hand = @dealer_hand
+      @player_score = 0
+      @dealer_score = 0
       round
       break unless repeat_game?
     end
@@ -25,65 +29,53 @@ class BlackJack
 
   def round
     @round = 1
-    2.times { give_cards }
+    @dealer_hand << @deck.take_card
+    2.times { @player_hand << @deck.take_card }
     loop do
+      @dealer_hand << @deck.take_card
       @interface.round(@round)
       action_player
-      break if @round == 'stop'
+      break if @round == 2
 
       @round += 1
     end
+    open_cards
   end
 
-  private
+  def bets
+    @bank += @player.take_money(10)
+    @bank += 10
+    @dealer_bank -= 10
+  end
 
-  def give_cards
-    @dealer.give_card(@player)
-    @dealer.give_card(@dealer)
+  def score
+    @player_hand.each { |card| @player_score += card.score}
+    @dealer_hand.each { |card| @dealer_score += card.score}
+    @player_hand.select { |card| card.value =~ /A/ }.each { @player_score -= 10 if @player_score > 21 }
+    @dealer_hand.select { |card| card.value =~ /A/ }.each { @dealer_score -= 10 if @dealer_score > 21 }
   end
 
   def action_player
     choice = @interface.choice_player
     case choice
-    when '1' then give_cards
+    when '1' then @player_hand << @deck.take_card if @player_hand.size < 3
     when '2' then open_cards
-    else @dealer.give_card(@dealer)
     end
   end
 
   def open_cards
     return if @round < 2
 
-    @round = 'stop'
-    result = result_game
-    @interface.open_cards(result)
-    return @bank.return_money if result == 'PUSH'
-
-    @bank.transfer_money_to_winner(result)
-  end
-
-  def bets
-    @bank.place_bet(@player) if @player.bankroll >= 10
-    @bank.place_bet(@dealer) if @dealer.bankroll >= 10
-  end
-
-  def result_game
-    return 'PUSH' if @dealer.hand.score == @player.hand.score
-    return 'PUSH' if @player.hand.bust && @dealer.hand.bust
-    return @player if @dealer.hand.bust
-    return @dealer if @player.hand.bust
-
-    unless @player.hand.bust && @dealer.hand.bust
-      @dealer.hand.score > @player.hand.score ? @dealer : @player
-    end
+    score
+    result = 'Dealer' if @player_score > 21 || @dealer_score > @player_score
+    result = @player.name if @dealer_score < @player_score || @dealer_score > 21
+    @interface.open_cards(result, @dealer_score, @player_score)
   end
 
   def repeat_game?
     return false if @player.bankroll < 10
 
     if @interface.repeat_game?
-      @dealer.hand.clear
-      @player.hand.clear
       true
     else
       false
