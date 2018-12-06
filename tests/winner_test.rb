@@ -3,6 +3,8 @@ require_relative '../lib/models/player'
 require_relative '../lib/controllers/black_jack'
 require_relative '../lib/ui/interface'
 
+# Перед запуском закоммитить 4 и 5 строку в классе BlackJack
+
 class WinnerTest < Test::Unit::TestCase
   def setup
     @game = BlackJack.new
@@ -43,6 +45,12 @@ class WinnerTest < Test::Unit::TestCase
   def test_win_gamer_2
     @game.instance_variable_set(:@player_score, 20)
     @game.instance_variable_set(:@dealer_score, 25)
+    assert_equal(@game.result, 'Gamer')
+  end
+
+  def test_win_gamer_3
+    @game.instance_variable_set(:@player_score, 21)
+    @game.instance_variable_set(:@dealer_score, 21)
     assert_equal(@game.result, 'Gamer')
   end
 end
