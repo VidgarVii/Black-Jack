@@ -2,7 +2,10 @@ class BlackJack
   def initialize
     @dealer_bank = 100
     @interface = Interface.new
+    return if @interface.stop_game
+
     create_player
+    start
   end
 
   def create_player

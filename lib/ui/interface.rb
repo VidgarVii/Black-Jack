@@ -1,7 +1,9 @@
 class Interface
   attr_accessor :player, :bank, :dealer_hand, :player_hand
+  attr_reader :stop_game
 
   def initialize
+    @stop_game = false
     welcome
   end
 
@@ -16,7 +18,7 @@ class Interface
   Для начало игры нажмите Enter.\n
   Для выхода - 0"
     start = gets.chomp
-    return if start == '0'
+    @stop_game = true if start == '0'
   end
 
   def round(number)
