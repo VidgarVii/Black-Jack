@@ -15,14 +15,14 @@ class BlackJack
 
   def start
     loop do
-      @dealer_hand = []
-      @player_hand = []
+      @dealer_hand = Hand.new
+      @player_hand = Hand.new
       @deck = Deck.new
       @bank = 0
       bets
       @interface.bank = @bank
-      @interface.player_hand = @player_hand
-      @interface.dealer_hand = @dealer_hand
+      @interface.player_hand = @player_hand.cards
+      @interface.dealer_hand = @dealer_hand.cards
       round
       break unless repeat_game?
     end
@@ -30,10 +30,10 @@ class BlackJack
 
   def round
     @round = 1
-    @dealer_hand << @deck.take_card
-    2.times { @player_hand << @deck.take_card }
+    @dealer_hand.add_card(@deck.take_card)
+    2.times { @player_hand.add_card(@deck.take_card) }
     loop do
-      @dealer_hand << @deck.take_card
+      @dealer_hand.add_card(@deck.take_card)
       @interface.round(@round)
       action_player
       break if @round == 2
@@ -49,19 +49,10 @@ class BlackJack
     @dealer_bank -= 10
   end
 
-  def score
-    @player_score = 0
-    @dealer_score = 0
-    @player_hand.each { |card| @player_score += card.score}
-    @dealer_hand.each { |card| @dealer_score += card.score}
-    @player_hand.select { |card| card.value =~ /A/ }.each { @player_score -= 10 if @player_score > 21 }
-    @dealer_hand.select { |card| card.value =~ /A/ }.each { @dealer_score -= 10 if @dealer_score > 21 }
-  end
-
   def action_player
     choice = @interface.choice_player
     case choice
-    when '1' then @player_hand << @deck.take_card if @player_hand.size < 3
+    when '1' then @player_hand.add_card(@deck.take_card) if @player_hand.cards.size < 3
     when '2' then open_cards
     end
   end
@@ -69,19 +60,20 @@ class BlackJack
   def open_cards
     return if @round < 2
 
-    score
+    @player_hand.calc_score
+    @dealer_hand.calc_score
     @result = result
-    @interface.open_cards(@result, @dealer_score, @player_score)
+    @interface.open_cards(@result, @dealer_hand.score, @player_hand.score)
     transfer_money
   end
 
   def result
-    return @player.name if @player_score == 21
-    return 'Dealer' if @player_score > 21
-    return 'PUSH' if @player_score == @dealer_score
-    return @player.name if @player_score < 21 &&  @dealer_score > 21
+    return @player.name if @player_hand.score == 21
+    return 'Dealer' if @player_hand.score > 21
+    return 'PUSH' if @player_hand.score == @dealer_hand.score
+    return @player.name if @player_hand.score < 21 &&  @dealer_hand.score > 21
 
-    @dealer_score < @player_score ? @player.name : 'Dealer'
+    @dealer_hand.score < @player_hand.score ? @player.name : 'Dealer'
   end
 
   def transfer_money
