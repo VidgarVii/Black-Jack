@@ -1,5 +1,5 @@
 class Interface
-  attr_accessor :player, :bank, :dealer_hand, :player_hand
+  attr_accessor :player, :bank, :dealer_hand
   attr_reader :stop_game
 
   def initialize
@@ -28,7 +28,7 @@ class Interface
     puts_questions(number)
     puts "\n Банк #{@bank}"
     print "Рука игрока (#{@player.name}): "
-    look_hand(@player_hand)
+    look_hand(@player.hand.cards)
     puts "Ваши деньги #{@player.bankroll}"
     puts "\n Ваш выбор?"
   end
@@ -38,7 +38,7 @@ class Interface
   end
 
   def puts_questions(round)
-    print "\n1 - Добавить карту" if @player_hand.size < 3
+    print "\n1 - Добавить карту" if @player.hand.cards.size < 3
     print "\n2 - Открыть карты" if round > 1
     puts "\nEnter - Пропустить ход\n" if round < 2
   end
@@ -61,7 +61,7 @@ class Interface
     look_hand(@dealer_hand)
     puts "Очки: #{dealer_score}"
     puts "\nКарты Игрока"
-    look_hand(@player_hand)
+    look_hand(@player.hand.cards)
     puts "Очки: #{player_score}"
     puts "\n#{winner(result)}"
   end
