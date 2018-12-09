@@ -1,5 +1,5 @@
 class Interface
-  attr_accessor :player, :bank, :dealer_hand
+  attr_accessor :player, :dealer, :bank
   attr_reader :stop_game
 
   def initialize
@@ -50,7 +50,7 @@ class Interface
   end
 
   def hide_dealers_hand
-    @dealer_hand.size.times do
+    @dealer.hand.cards.size.times do
       print '[*]'
     end
   end
@@ -58,7 +58,7 @@ class Interface
   def open_cards(result, dealer_score, player_score)
     system('clear')
     puts 'Карты Дилера'
-    look_hand(@dealer_hand)
+    look_hand(@dealer.hand.cards)
     puts "Очки: #{dealer_score}"
     puts "\nКарты Игрока"
     look_hand(@player.hand.cards)

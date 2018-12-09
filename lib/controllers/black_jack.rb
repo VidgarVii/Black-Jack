@@ -14,13 +14,13 @@ class BlackJack
   end
 
   def start
+    @dealer = Player.new('Dealer')
+    @interface.dealer = @dealer
     loop do
-      @dealer_hand = Hand.new
       @deck = Deck.new
       @bank = 0
       bets
       @interface.bank = @bank
-      @interface.dealer_hand = @dealer_hand.cards
       round
       break unless repeat_game?
     end
@@ -28,10 +28,10 @@ class BlackJack
 
   def round
     @round = 1
-    @dealer_hand.add_card(@deck.take_card)
+    @dealer.hand.add_card(@deck.take_card)
     2.times { @player.hand.add_card(@deck.take_card) }
     loop do
-      @dealer_hand.add_card(@deck.take_card)
+      @dealer.hand.add_card(@deck.take_card)
       @interface.round(@round)
       action_player
       break if @round == 2
@@ -59,19 +59,19 @@ class BlackJack
     return if @round < 2
 
     @player.hand.calc_score
-    @dealer_hand.calc_score
+    @dealer.hand.calc_score
     @result = result
-    @interface.open_cards(@result, @dealer_hand.score, @player.hand.score)
+    @interface.open_cards(@result, @dealer.hand.score, @player.hand.score)
     transfer_money
   end
 
   def result
     return @player.name if @player.hand.score == 21
     return 'Dealer' if @player.hand.score > 21
-    return 'PUSH' if @player.hand.score == @dealer_hand.score
-    return @player.name if @player.hand.score < 21 &&  @dealer_hand.score > 21
+    return 'PUSH' if @player.hand.score == @dealer.hand.score
+    return @player.name if @player.hand.score < 21 &&  @dealer.hand.score > 21
 
-    @dealer_hand.score < @player.hand.score ? @player.name : 'Dealer'
+    @dealer.hand.score < @player.hand.score ? @player.name : 'Dealer'
   end
 
   def transfer_money
@@ -89,6 +89,7 @@ class BlackJack
 
     if @interface.repeat_game?
       @player.hand.drop
+      @dealer.hand.drop
       true
     else
       false
