@@ -50,7 +50,7 @@ class BlackJack
     choice = @interface.choice_player
     case choice
     when '1' then @player.hand.add_card(@deck.take_card) if @player.hand.cards.size < 3
-    when '2' then open_cards
+    when '2' then return
     end
   end
 
