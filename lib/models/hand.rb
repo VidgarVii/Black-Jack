@@ -2,8 +2,7 @@ class Hand
   attr_reader :cards, :score
 
   def initialize
-    @cards = []
-    @score = 0
+    @cards = []    
   end
 
   def add_card(card)
@@ -11,6 +10,7 @@ class Hand
   end
 
   def calc_score
+    @score = 0
     @cards.each { |card| @score += card.score }
     @cards.select { |card| card.value =~ /A/ }.each { @score -= 10 if @score > 21 }
   end

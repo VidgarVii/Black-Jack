@@ -30,7 +30,8 @@ class BlackJack
     @dealer.hand.add_card(@deck.take_card)
     2.times { @player.hand.add_card(@deck.take_card) }
     loop do
-      @dealer.hand.add_card(@deck.take_card)
+      @dealer.hand.calc_score
+      @dealer.hand.add_card(@deck.take_card) if @dealer.hand.score < 17
       @interface.round(@round)
       action_player
       break if @round == 2
