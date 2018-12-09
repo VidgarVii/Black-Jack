@@ -1,6 +1,5 @@
 class BlackJack
   def initialize
-    @dealer_bank = 100
     @interface = Interface.new
     return if @interface.stop_game
 
@@ -44,7 +43,7 @@ class BlackJack
   def bets
     @bank = 20
     @player.bankroll -= 10
-    @dealer_bank -= 10
+    @dealer.bankroll -= 10
   end
 
   def action_player
@@ -76,16 +75,16 @@ class BlackJack
 
   def transfer_money
     case @result
-    when 'Dealer' then @dealer_bank += @bank
+    when 'Dealer' then @dealer.bankroll += @bank
     when 'PUSH'
       @player.bankroll += 10
-      @dealer_bank += 10
+      @dealer.bankroll += 10
     when @player.name then @player.bankroll += 20
     end
   end
 
   def repeat_game?
-    return false if @player.bankroll < 10 || @dealer_bank < 10
+    return false if @player.bankroll < 10 || @dealer.bankroll < 10
 
     if @interface.repeat_game?
       @player.hand.drop
